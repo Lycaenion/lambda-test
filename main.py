@@ -37,7 +37,8 @@ def lambda_handler(event, context):
     driver.get('https://www.google.com')
     search_box = driver.find_element(By.NAME,'q')
     search_box.send_keys('OpenAI')
-    search_box.send_keys(Keys.RETURN)
+    time.sleep(5)
+    search_box.submit()
     time.sleep(5)  # Wait for results to load
     results = driver.find_elements(By.CSS_SELECTOR, 'div.g')
     titles = [result.find_element(By.TAG_NAME, 'h3').text for result in results]
@@ -46,3 +47,6 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': titles
     }
+
+if __name__ == '__main__':
+    lambda_handler(None, None)
